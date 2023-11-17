@@ -2,7 +2,7 @@ package router
 
 import (
 	"example/web-service-gin/declarations"
-	handlers "example/web-service-gin/route_handlers"
+	handler "example/web-service-gin/route_handlers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +23,7 @@ var albumsList = []declarations.Album{
 	},
 	{
 		ID:     "1003",
-		Title:  "Sarah Vaughan and CLifford Brown",
+		Title:  "Sarah Vaughan and Clifford Brown",
 		Artist: "Sarah Vaughan",
 		Price:  39.99,
 	},
@@ -31,16 +31,17 @@ var albumsList = []declarations.Album{
 
 func SetupGinRouter() *gin.Engine {
 	// Engine instance with the Logger and Recovery middleware already attached.
-	var ginRouter *gin.Engine = gin.Default()
+	var router *gin.Engine = gin.Default()
 
 	// GET is a shortcut for router.Handle("GET", path, handlers).
-	ginRouter.GET("/albums", handlers.GetAlbums((&albumsList)))
 
-	ginRouter.GET("/albums/:id", handlers.GetAlbumById(&albumsList))
+	router.GET("/albums", handler.GetAlbums((&albumsList)))
 
-	ginRouter.POST("/albums", handlers.PostAlbums(&albumsList))
+	router.GET("/albums/:id", handler.GetAlbumById(&albumsList))
 
-	ginRouter.GET("/", handlers.HomeRoute)
+	router.POST("/albums", handler.PostAlbums(&albumsList))
 
-	return ginRouter
+	router.GET("/", handler.HomeRoute)
+
+	return router
 }

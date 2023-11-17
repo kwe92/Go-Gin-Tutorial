@@ -14,25 +14,25 @@ import (
 
 func TestGetAlbums(t *testing.T) {
 
-	// create a request to desired endpoint
+	// create request to endpoint
 	req, err := http.NewRequest("GET", "/albums", nil)
 
-	// check if there was an error generating the request
+	// check error generating request
 	checkErr(t, err)
 
-	// create a ResponseRecorder to act as a ResponseWriter
+	// create ResponseRecorder acting as ResponseWriter
 	res := httptest.NewRecorder()
 
 	// setup router
 	router := SetupGinRouter()
 
-	// match request URL to a pattern of a registered handler
-	// excute the handler, writing to the response body
+	// match request URL to pattern of registered handler
+	// execute handler, writing to response body
 	router.ServeHTTP(res, req)
 
 	var actual []declarations.Album
 
-	// write the response body bytes to a GO data structure
+	// write response body bytes to GO data structure
 	json.NewDecoder(res.Body).Decode(&actual)
 
 	assert.Equal(t, 200, res.Code)
@@ -65,13 +65,13 @@ func TestPostAlbums(t *testing.T) {
 					Price:  49.99,
 				}
 
-				// create buffer with io.Read and io.Write methods representing the reqest body
+				// create buffer with io.Read and io.Write methods representing reqest body
 				var reqBody bytes.Buffer
 
 				// write expected data to request body buffer
 				json.NewEncoder(&reqBody).Encode(expected)
 
-				// create a request to desired endpoint with request body
+				// create a request to endpoint with request body
 				req, err := http.NewRequest("POST", "/albums", &reqBody)
 
 				checkErr(t, err)
@@ -83,14 +83,14 @@ func TestPostAlbums(t *testing.T) {
 			},
 
 			wantCode: http.StatusOK,
-			wantBody: []interface{}([]interface{}{map[string]interface{}{"artist": "John Coltrane", "id": "1001", "price": 56.99, "title": "Blue Train"}, map[string]interface{}{"artist": "Gerry Mulligan", "id": "1002", "price": 17.99, "title": "Jeru"}, map[string]interface{}{"artist": "Sarah Vaughan", "id": "1003", "price": 39.99, "title": "Sarah Vaughan and CLifford Brown"}, map[string]interface{}{"artist": "Betty Carter", "id": "1004", "price": 49.99, "title": "The Modern Sound of Betty Carter"}}),
+			wantBody: []interface{}{map[string]interface{}{"artist": "John Coltrane", "id": "1001", "price": 56.99, "title": "Blue Train"}, map[string]interface{}{"artist": "Gerry Mulligan", "id": "1002", "price": 17.99, "title": "Jeru"}, map[string]interface{}{"artist": "Sarah Vaughan", "id": "1003", "price": 39.99, "title": "Sarah Vaughan and Clifford Brown"}, map[string]interface{}{"artist": "Betty Carter", "id": "1004", "price": 49.99, "title": "The Modern Sound of Betty Carter"}},
 		},
 
 		{
 			name: "must return error message for invalid request body.",
 			args: func(t *testing.T) args {
 
-				// create buffer with io.Read and io.Write methods representing the reqest body
+				// create buffer with io.Read and io.Write methods representing reqest body
 				var reqBody bytes.Buffer
 
 				// write expected data to request body buffer
@@ -206,7 +206,7 @@ func TestGetAlbumById(t *testing.T) {
 
 func checkErr(t *testing.T, err error) {
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err.Error())
 	}
 
 }
