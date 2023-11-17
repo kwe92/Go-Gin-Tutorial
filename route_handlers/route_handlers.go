@@ -29,7 +29,7 @@ func PostAlbums(albums *[]declarations.Album) func(c *gin.Context) {
 		var newAlbum declarations.Album
 
 		// unmarshel data into GO object
-		if err := c.BindJSON(&newAlbum); err != nil {
+		if err := c.ShouldBindJSON(&newAlbum); err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -61,3 +61,13 @@ func GetAlbumById(albums *[]declarations.Album) func(c *gin.Context) {
 
 	}
 }
+
+// gin.Context | struct | gin package
+
+//   - a struct that is the most important part of gin
+//   - allows you to:
+
+//       ~ pass variables between middleware
+//       ~ manage data flow
+//       ~ validate JSON of a request
+//       ~ serialize JSON
