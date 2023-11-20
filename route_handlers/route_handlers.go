@@ -1,7 +1,7 @@
 package route_handlers
 
 import (
-	"example/web-service-gin/declarations"
+	"example/web-service-gin/model"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,7 +15,7 @@ func HomeRoute(c *gin.Context) {
 	c.String(http.StatusOK, "First Gin Web Server!")
 }
 
-func GetAlbums(albums *[]declarations.Album) func(c *gin.Context) {
+func GetAlbums(albums *[]model.Album) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
 		// marshel Go object and write to response body | set content-type to application/json
@@ -23,10 +23,10 @@ func GetAlbums(albums *[]declarations.Album) func(c *gin.Context) {
 	}
 }
 
-func PostAlbums(albums *[]declarations.Album) func(c *gin.Context) {
+func PostAlbums(albums *[]model.Album) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
-		var newAlbum declarations.Album
+		var newAlbum model.Album
 
 		// unmarshel data into GO object
 		if err := c.ShouldBindJSON(&newAlbum); err != nil {
@@ -36,7 +36,7 @@ func PostAlbums(albums *[]declarations.Album) func(c *gin.Context) {
 
 		*albums = append(*albums, newAlbum)
 
-		log.Println("New declarations.Album Added:", newAlbum)
+		log.Println("New model.Album Added:", newAlbum)
 
 		c.IndentedJSON(http.StatusOK, albums)
 
@@ -44,7 +44,7 @@ func PostAlbums(albums *[]declarations.Album) func(c *gin.Context) {
 
 }
 
-func GetAlbumById(albums *[]declarations.Album) func(c *gin.Context) {
+func GetAlbumById(albums *[]model.Album) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
 		// Param returns the value of the URL param.

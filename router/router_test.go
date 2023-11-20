@@ -3,7 +3,7 @@ package router
 import (
 	"bytes"
 	"encoding/json"
-	"example/web-service-gin/declarations"
+	"example/web-service-gin/model"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -30,7 +30,7 @@ func TestGetAlbums(t *testing.T) {
 	// execute handler, writing to response body
 	router.ServeHTTP(res, req)
 
-	var actual []declarations.Album
+	var actual []model.Album
 
 	// write response body bytes to GO data structure
 	json.NewDecoder(res.Body).Decode(&actual)
@@ -58,7 +58,7 @@ func TestPostAlbums(t *testing.T) {
 		{
 			name: "must return expected result for valid request body.",
 			args: func(t *testing.T) args {
-				expected := declarations.Album{
+				expected := model.Album{
 					ID:     "1004",
 					Title:  "The Modern Sound of Betty Carter",
 					Artist: "Betty Carter",
@@ -108,7 +108,7 @@ func TestPostAlbums(t *testing.T) {
 			},
 
 			wantCode: http.StatusBadRequest,
-			wantBody: map[string]interface{}(map[string]interface{}{"error": "json: cannot unmarshal string into Go value of type declarations.Album"}),
+			wantBody: map[string]interface{}(map[string]interface{}{"error": "json: cannot unmarshal string into Go value of type model.Album"}),
 		},
 	}
 

@@ -1,4 +1,4 @@
-package declarations
+package model
 
 // Album: data about a record album | struct tags: for JSON serialization
 type Album struct {

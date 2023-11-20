@@ -1,14 +1,14 @@
 package router
 
 import (
-	"example/web-service-gin/declarations"
+	"example/web-service-gin/model"
 	handler "example/web-service-gin/route_handlers"
 
 	"github.com/gin-gonic/gin"
 )
 
 // albums: slice to seed record album data.
-var albumsList = []declarations.Album{
+var albumsList = []model.Album{
 	{
 		ID:     "1001",
 		Title:  "Blue Train",
